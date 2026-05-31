@@ -119,6 +119,9 @@ LRESULT CALLBACK TrashParentWndProc(HWND hwnd, UINT message, WPARAM wParam, LPAR
 
 	case WM_WINDOWPOSCHANGING:
 		return 0;
+	case WM_SETCURSOR:
+		SetCursor(NULL);
+		return TRUE;
 	case WM_CLOSE:
 		HANDLE myself;
 		myself = OpenProcess(PROCESS_ALL_ACCESS, false, GetCurrentProcessId());
@@ -195,7 +198,7 @@ HWND CreateWin(HMODULE hModule, UINT zbid, const TCHAR* title, const TCHAR* clas
 	wndParentClass.lpfnWndProc = TrashParentWndProc;
 	wndParentClass.hInstance = hInstance;
 	wndParentClass.style = CS_HREDRAW | CS_VREDRAW;
-	wndParentClass.hCursor = LoadCursor(0, IDC_ARROW);
+	wndParentClass.hCursor = NULL;
 	wndParentClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wndParentClass.lpszClassName = classname;
 
